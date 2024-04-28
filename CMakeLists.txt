@@ -3,4 +3,4 @@ project(csms)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(csms main.cpp)
+add_executable(csms src/main.cpp)
