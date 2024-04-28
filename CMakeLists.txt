@@ -3,4 +3,8 @@ project(csms)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(csms src/main.cpp)
+include_directories(include)
+
+add_executable(csms src/main.cpp
+        src/computer.cpp
+        include/computer.h)
