@@ -14,12 +14,12 @@ protected:
     unsigned performance_rating_;
     [[nodiscard]] virtual unsigned compute_performance() const = 0;
     explicit computer(unsigned price);
-
 public:
     void assemble();
+    virtual ~computer() = default;
     [[nodiscard]] unsigned get_performance_rating() const;
     [[nodiscard]] unsigned get_price() const;
-    bool is_assembled() const;
+    [[nodiscard]] bool is_assembled() const;
 };
 
 class workstation : computer {
