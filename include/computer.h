@@ -7,12 +7,14 @@
 
 
 class computer {
-protected:
+private:
     unsigned price_;
-    unsigned performance_rating_;
     bool assembled_;
-    explicit computer(unsigned price);
+protected:
+    unsigned performance_rating_;
     [[nodiscard]] virtual unsigned compute_performance() const = 0;
+    explicit computer(unsigned price);
+
 public:
     void assemble();
     [[nodiscard]] unsigned get_performance_rating() const;
