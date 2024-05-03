@@ -11,11 +11,11 @@
 class employee {
     std::string name_;
     float commission_;
-    void set_commission_(float commission);
 protected:
     float earnings_;
 public:
     [[nodiscard]] float get_earnings() const;
+    void set_commission_(float commission);
     [[nodiscard]] float get_commission() const;
     employee(std::string name, float commission);
     virtual void earn(unsigned value);
