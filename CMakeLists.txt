@@ -7,4 +7,6 @@ include_directories(include)
 
 add_executable(csms src/main.cpp
         src/computer.cpp
-        include/computer.h)
+        include/computer.h
+        src/employee.cpp
+        include/employee.h)
