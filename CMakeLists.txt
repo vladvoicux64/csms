@@ -9,4 +9,6 @@ add_executable(csms src/main.cpp
         src/computer.cpp
         include/computer.h
         src/employee.cpp
-        include/employee.h)
+        include/employee.h
+        src/task.cpp
+        include/task.h)
