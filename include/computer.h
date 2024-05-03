@@ -12,10 +12,11 @@ private:
     bool assembled_;
 protected:
     unsigned performance_rating_;
-    [[nodiscard]] virtual unsigned compute_performance() const = 0;
+    virtual void compute_performance() = 0;
     explicit computer(unsigned price);
 public:
     void assemble();
+    void prepare_for_sale();
     virtual ~computer() = default;
     [[nodiscard]] unsigned get_performance_rating() const;
     [[nodiscard]] unsigned get_price() const;
@@ -25,7 +26,7 @@ public:
 class workstation : computer {
     unsigned cpu_freq_;
     unsigned core_count_;
-    [[nodiscard]] unsigned compute_performance() const override;
+    void compute_performance() override;
 public:
     workstation(unsigned price, unsigned cpu_freq, unsigned core_count);
 };
@@ -34,11 +35,11 @@ class server : computer {
     unsigned storage_;
     unsigned ram_capacity_;
     unsigned tflops_;
-    [[nodiscard]] unsigned compute_performance() const override;
+    void compute_performance() override;
 public:
     server(unsigned price, unsigned storage, unsigned ram_capacity, unsigned tflops);
 };
 
-// these classes only follow attributes i considered important for the performance rating per each class
+// these classes only contain attributes i considered important for the performance rating per each class
 
 #endif //CSMS_COMPUTER_H
