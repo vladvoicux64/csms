@@ -23,8 +23,8 @@ public:
 };
 
 class manager : employee {
-    void earn(unsigned value) override;
 public:
+    void earn(unsigned value) override;
     explicit manager(std::string name);
 };
 
