@@ -10,12 +10,12 @@ class computer {
 private:
     unsigned price_;
     bool assembled_;
+    void assemble();
 protected:
     unsigned performance_rating_;
     virtual void compute_performance() = 0;
     explicit computer(unsigned price);
 public:
-    void assemble();
     void prepare_for_sale();
     virtual ~computer() = default;
     [[nodiscard]] unsigned get_performance_rating() const;
