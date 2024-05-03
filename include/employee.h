@@ -19,6 +19,7 @@ public:
     [[nodiscard]] float get_earnings() const;
     [[nodiscard]] float get_commission() const;
     employee(std::string name, float commission);
+    virtual ~employee() = default;
 };
 
 class manager : employee {
