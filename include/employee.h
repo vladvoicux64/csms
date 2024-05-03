@@ -14,11 +14,11 @@ class employee {
     void set_commission_(float commission);
 protected:
     float earnings_;
-    virtual void earn(unsigned value);
 public:
     [[nodiscard]] float get_earnings() const;
     [[nodiscard]] float get_commission() const;
     employee(std::string name, float commission);
+    virtual void earn(unsigned value);
     virtual ~employee() = default;
 };
 
