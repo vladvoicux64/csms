@@ -10,15 +10,13 @@
 #include "employee.h"
 
 class task {
-protected:
-    employee *employee_;
-    explicit task(employee *employee);
 public:
     virtual ~task() = default;
     virtual void complete() = 0;
 };
 
 class employee_task : task {
+    employee *employee_;
     computer *computer_;
 public:
     explicit employee_task(computer *computer, employee *employee);
@@ -26,6 +24,7 @@ public:
 };
 
 class managerial_task : task {
+    employee *employee_;
     manager *manager_;
 public:
     explicit managerial_task(employee* manager, employee *employee);

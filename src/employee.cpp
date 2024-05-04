@@ -36,7 +36,7 @@ const std::string &employee::get_name() const
     return name_;
 }
 
-manager::manager(std::string name) : employee(std::move(name), 0)
+manager::manager(std::string name) : employee(std::move(name), 0.1f)
 {
 
 }

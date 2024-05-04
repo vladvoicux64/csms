@@ -13,7 +13,7 @@ class AlreadySold : std::exception {
 public:
     explicit AlreadySold(std::string emp_name, unsigned computer_serial) : emp_name_(std::move(emp_name)), computer_serial_{computer_serial} {};
     const char * what() {
-        return (this->emp_name_ + " cannot sell computer with serial " + this->computer_serial_ + ". It is assembled so it must have already been sold.").c_str();
+        return (this->emp_name_ + " cannot sell computer with serial " + std::to_string(this->computer_serial_) + ". It is assembled so it must have already been sold.").c_str();
     }
 };
 
@@ -26,12 +26,7 @@ public:
     }
 };
 
-task::task(employee *employee) : employee_(employee)
-{
-
-}
-
-employee_task::employee_task(computer *computer, employee *employee) : task(employee), computer_(computer)
+employee_task::employee_task(computer *computer, employee *employee) : employee_(employee), computer_(computer)
 {
 
 }
@@ -59,7 +54,7 @@ void managerial_task::complete()
     this->manager_->earn(500);
 }
 
-managerial_task::managerial_task(employee *manager, employee *employee) : task(employee)
+managerial_task::managerial_task(employee *manager, employee *employee) : employee_(employee)
 {
     try {
         auto *temp = dynamic_cast<class manager *>(manager);
