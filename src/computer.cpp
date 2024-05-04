@@ -4,7 +4,9 @@
 
 #include "computer.h"
 
-computer::computer(unsigned int price) : price_(price), performance_rating_(0), assembled_(false)
+unsigned computer::stock_count_ = 0;
+
+computer::computer(unsigned int price) : price_(price), performance_rating_(0), assembled_(false), serial_(computer::generate_new_serial())
 {
 }
 
@@ -32,6 +34,21 @@ void computer::prepare_for_sale()
 {
     this->assemble();
     this->compute_performance();
+}
+
+unsigned computer::get_stock_count()
+{
+    return computer::stock_count_;
+}
+
+unsigned computer::get_serial() const
+{
+    return this->serial_;
+}
+
+unsigned computer::generate_new_serial()
+{
+    return ++computer::stock_count_;
 }
 
 void workstation::compute_performance()

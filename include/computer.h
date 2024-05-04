@@ -8,14 +8,19 @@
 
 class computer {
 private:
+    static unsigned stock_count_;
+    unsigned serial_;
     unsigned price_;
     bool assembled_;
     void assemble();
 protected:
     unsigned performance_rating_;
     virtual void compute_performance() = 0;
+    static unsigned generate_new_serial();
     explicit computer(unsigned price);
 public:
+    static unsigned get_stock_count();
+    unsigned get_serial() const;
     void prepare_for_sale();
     virtual ~computer() = default;
     [[nodiscard]] unsigned get_performance_rating() const;
