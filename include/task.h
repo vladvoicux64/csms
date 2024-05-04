@@ -31,5 +31,16 @@ public:
     void complete() override;
 };
 
+class computer_query : task {
+    computer *computer_;
+public:
+    explicit computer_query(computer *computer);
+    void complete() override;
+};
+
+class stock_query : task {
+public:
+    void complete() override;
+};
 
 #endif //CSMS_TASK_H

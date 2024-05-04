@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <utility>
+#include <sstream>
+#include <iostream>
 #include "task.h"
 
 
@@ -83,4 +85,23 @@ managerial_task::managerial_task(employee *manager, employee *employee) : employ
         std::cerr << excp.what();
         throw;
     }
+}
+
+computer_query::computer_query(computer *computer) : computer_(computer)
+{
+
+}
+
+void computer_query::complete()
+{
+    std::stringstream buff;
+    buff << "Serial: " << this->computer_->get_serial() << ".\n" << "Price: " <<
+        this->computer_->get_price() << ".\n" << "Perf. rating: " << this->computer_->get_performance_rating() <<
+        ".\n\n";
+    std::cout << buff.str();
+}
+
+void stock_query::complete()
+{
+    std::cout << computer::get_stock_count();
 }
