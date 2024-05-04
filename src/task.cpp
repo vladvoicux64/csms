@@ -26,9 +26,26 @@ public:
     }
 };
 
+class TypeMismatch : std::exception {
+    std::string emp_name_;
+public:
+    explicit TypeMismatch(std::string emp_name) : emp_name_(std::move(emp_name)) {};
+    const char * what() {
+        return (this->emp_name_ + " cannot be assigned as an employee in a sales task, as he is a manager.").c_str();
+    }
+
+};
+
 employee_task::employee_task(computer *computer, employee *employee) : employee_(employee), computer_(computer)
 {
-
+    try {
+        if (dynamic_cast<manager *>(employee)) throw TypeMismatch(employee->get_name());
+    }
+    catch (TypeMismatch &excp)
+    {
+        std::cerr << excp.what();
+        throw;
+    }
 }
 
 void employee_task::complete()
