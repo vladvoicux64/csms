@@ -7,7 +7,6 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include <utility>
 #include <unordered_map>
 
 std::unordered_map<std::string, command_type> handler::command_map = {{"new", NEW},
@@ -56,7 +55,8 @@ void handler::create_employee(employee_type type)
             this->employees_.emplace(name, std::make_unique<manager>(name));
         }
     }
-    std::cout << "\n";
+    std::cout << "Operation successful.\n";
+    std::cin.ignore();
 }
 
 void handler::create_computer(computer_type type)
@@ -99,7 +99,8 @@ void handler::create_computer(computer_type type)
             this->computers_.emplace(computer::get_next_serial(), std::make_unique<server>(price, storage_cap, ram_cap, tflops));
         }
     }
-    std::cout << "\n";
+    std::cout << "Operation successful.\n";
+    std::cin.ignore();
 }
 
 void handler::create_task(task_type type)
@@ -123,6 +124,7 @@ void handler::create_task(task_type type)
                         std::cout << "Enter an existing serial for a computer and press Enter:\n";
                         std::cin >> serial;
                     }
+                    std::cin.ignore();
                     this->tasks_.emplace(std::make_unique<employee_task>(this->computers_.at(serial).get(), this->employees_.at(name).get()));
                 }
             }
@@ -142,6 +144,7 @@ void handler::create_task(task_type type)
                         std::cout << "Enter an existing manager name and press Enter:\n";
                         std::cin >> man_name;
                     }
+                    std::cin.ignore();
                     this->tasks_.emplace(std::make_unique<managerial_task>(this->employees_.at(man_name).get(), this->employees_.at(emp_name).get()));
                 }
             }
@@ -156,6 +159,7 @@ void handler::create_task(task_type type)
                         std::cout << "Enter an existing employee name and press Enter:\n";
                         std::cin >> name;
                     }
+                    std::cin.ignore();
                     this->tasks_.emplace(std::make_unique<employee_query>(this->employees_.at(name).get()));
                 }
             }
@@ -164,12 +168,13 @@ void handler::create_task(task_type type)
                 if (this->computers_.empty()) throw InsufficientData(0, 1, this->employees_.size(), 0);
                 else
                 {
-                    unsigned serial;
+                    unsigned serial = 0;
                     while(this->computers_.find(serial) == this->computers_.end())
                     {
                         std::cout << "Enter an existing serial for a computer and press Enter:\n";
                         std::cin >> serial;
                     }
+                    std::cin.ignore();
                     this->tasks_.emplace(std::make_unique<computer_query>(this->computers_.at(serial).get()));
                 }
             }
@@ -178,24 +183,24 @@ void handler::create_task(task_type type)
                 this->tasks_.emplace(std::make_unique<stock_query>());
             }
         }
+        std::cout << "Operation successful.\n";
     }
     catch (InsufficientData &excp)
     {
-        std::cerr << excp.what();
+        std::cerr << excp.what() << "\n";
     }
     catch (AlreadySold &excp)
     {
-        std::cerr << excp.what();
+        std::cerr << excp.what() << "\n";
     }
     catch (TypeMismatch &excp)
     {
-        std::cerr << excp.what();
+        std::cerr << excp.what() << "\n";
     }
     catch (ManagerMissing &excp)
     {
-        std::cerr << excp.what();
+        std::cerr << excp.what() << "\n";
     }
-    std::cout << "\n";
 }
 
 void handler::remove_employee(const std::string& name)
@@ -203,10 +208,12 @@ void handler::remove_employee(const std::string& name)
     try {
         if (this->employees_.find(name) == this->employees_.end()) throw InexistingEmployee(name);
         else this->employees_.erase(name);
+        std::cout << "Operation successful.\n";
     }
     catch (InexistingEmployee &excp) {
-        std::cerr << excp.what();
+        std::cerr << excp.what() << "\n";
     }
+    std::cin.ignore();
 }
 
 void handler::remove_computer(unsigned int serial)
@@ -214,10 +221,12 @@ void handler::remove_computer(unsigned int serial)
     try {
         if (this->computers_.find(serial) == this->computers_.end()) throw InexistingComputer(serial);
         else this->computers_.erase(serial);
+        std::cout << "Operation successful.\n";
     }
     catch (InexistingComputer &excp) {
-        std::cerr << excp.what();
+        std::cerr << excp.what() << "\n";
     }
+    std::cin.ignore();
 }
 
 void handler::skip_task()
@@ -225,9 +234,10 @@ void handler::skip_task()
     try {
         if(!this->tasks_.empty()) this->tasks_.pop();
         else throw NoTasks();
+        std::cout << "Operation successful.\n";
     }
     catch (NoTasks &excp) {
-        std::cerr << excp.what();
+        std::cerr << excp.what() << "\n";
     }
 }
 
@@ -262,7 +272,7 @@ void handler::event_loop()
                 }
                 break; case EXIT:
                 {
-                    std::cout << "Goodbye!\n\n";
+                    std::cout << "Goodbye!\n";
                     return;
                 }
                 case RUN:
@@ -272,6 +282,7 @@ void handler::event_loop()
                         this->tasks_.front()->complete();
                         this->tasks_.pop();
                     }
+                    std::cout << "Operation successful.\n";
                 }
                 break; case SKIP:
                 {
@@ -281,14 +292,13 @@ void handler::event_loop()
         }
         catch (BadCommand &excp)
         {
-            std::cerr << excp.what();
+            std::cerr << excp.what() << "\n";
         }
         catch (std::out_of_range &excp)
         {
-            std::cerr << "Not enough arguments.\n";
+            std::cerr << "Not enough arguments."  << "\n";
         }
     }
-    std::cout << "\n";
 }
 
 void handler::create_entity(entity_type type, const std::string& type_to_forward)
@@ -337,7 +347,6 @@ void handler::remove_entity(entity_type type)
         }
         break; case TASK: break;
     }
-    std::cout << "\n";
 }
 
 const char *InsufficientData::what()
