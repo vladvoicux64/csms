@@ -69,24 +69,21 @@ public:
 };
 
 class InsufficientData : public std::exception {
-    unsigned needed_emp_;
-    unsigned needed_comp_;
-    unsigned emp_;
-    unsigned comp_;
+    std::string message_;
 public:
     InsufficientData(unsigned needed_emp, unsigned needed_comp, unsigned emp, unsigned comp);
     const char * what();
 };
 
 class InexistingEmployee : public std::exception {
-    std::string emp_name_;
+    std::string message_;
 public:
     explicit InexistingEmployee(std::string name);
     const char * what();
 };
 
 class InexistingComputer : public std::exception {
-    unsigned serial_;
+    std::string message_;
 public:
     explicit InexistingComputer(unsigned serial);
     const char * what();

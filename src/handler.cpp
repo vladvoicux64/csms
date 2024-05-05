@@ -341,34 +341,34 @@ void handler::remove_entity(entity_type type)
 
 const char *InsufficientData::what()
 {
-    return ("Insufficient data to create the selected type task. Needed " + std::to_string(this->needed_emp_) + " employees and " + std::to_string(this->needed_comp_) + " computers stored, but there are only " +
-            std::to_string(this->emp_) + " employees and " + std::to_string(comp_) + " in the data storage. Operation aborted.").c_str();
+    return message_.c_str();
 }
 
 InsufficientData::InsufficientData(unsigned int needed_emp, unsigned int needed_comp, unsigned int emp,
-                                   unsigned int comp)  : needed_emp_(needed_emp), needed_comp_(needed_comp), emp_(emp), comp_(comp)
+                                   unsigned int comp)  : message_("Insufficient data to create the selected type task. Needed " + std::to_string(needed_emp) + " employees and " + std::to_string(needed_comp) + " computers stored, but there are only " +
+                                                                  std::to_string(emp) + " employees and " + std::to_string(comp) + " in the data storage. Operation aborted.")
 {
 
 }
 
-InexistingEmployee::InexistingEmployee(std::string name) : emp_name_(std::move(name))
+InexistingEmployee::InexistingEmployee(std::string name) : message_("Employee named " + name + " not found. Operation aborted.")
 {
 
 }
 
 const char *InexistingEmployee::what()
 {
-    return ("Employee named " + this->emp_name_ + " not found. Operation aborted.").c_str();
+    return message_.c_str();
 }
 
-InexistingComputer::InexistingComputer(unsigned int serial) : serial_(serial)
+InexistingComputer::InexistingComputer(unsigned int serial) : message_("Computer with serial " + std::to_string(serial) + " not found. Operation aborted.")
 {
 
 }
 
 const char *InexistingComputer::what()
 {
-    return ("Computer with serial " + std::to_string(this->serial_) + " not found. Operation aborted.").c_str();
+    return message_.c_str();
 }
 
 const char *NoTasks::what()
@@ -378,10 +378,10 @@ const char *NoTasks::what()
 
 const char *BadCommand::what()
 {
-    return ("Bad command: " + command_ + ". Operation aborted.").c_str();
+    return message_.c_str();
 }
 
-BadCommand::BadCommand(std::string command) : command_(std::move(command))
+BadCommand::BadCommand(std::string command) : message_("Bad command: " + command + ". Operation aborted.")
 {
 
 }

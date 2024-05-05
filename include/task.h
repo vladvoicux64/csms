@@ -51,22 +51,21 @@ public:
 };
 
 class AlreadySold : public std::exception {
-    std::string emp_name_;
-    unsigned computer_serial_;
+    std::string message_;
 public:
     explicit AlreadySold(std::string emp_name, unsigned computer_serial);
     const char * what();
 };
 
 class ManagerMissing : public std::exception {
-    std::string emp_name_;
+    std::string message_;
 public:
     explicit ManagerMissing(std::string emp_name);
     const char * what();
 };
 
 class TypeMismatch : public std::exception {
-    std::string emp_name_;
+    std::string message_;
 public:
     explicit TypeMismatch(std::string emp_name);
     const char * what();

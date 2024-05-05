@@ -69,30 +69,30 @@ void employee_query::complete()
 
 const char *TypeMismatch::what()
 {
-    return (this->emp_name_ + " cannot be assigned as an employee in a sales task, as he is a manager. Operation aborted.").c_str();
+    return message_.c_str();
 }
 
-TypeMismatch::TypeMismatch(std::string emp_name) : emp_name_(std::move(emp_name))
+TypeMismatch::TypeMismatch(std::string emp_name) : message_(emp_name + " cannot be assigned as an employee in a sales task, as he is a manager. Operation aborted.")
 {
 
 }
 
 const char *ManagerMissing::what()
 {
-    return (this->emp_name_ + " cannot be assigned as a manager in a task, because his type is not manager. Operation aborted.").c_str();
+    return message_.c_str();
 }
 
-ManagerMissing::ManagerMissing(std::string emp_name) : emp_name_(std::move(emp_name))
+ManagerMissing::ManagerMissing(std::string emp_name) : message_(emp_name + " cannot be assigned as a manager in a task, because his type is not manager. Operation aborted.")
 {
 
 }
 
 const char *AlreadySold::what()
 {
-    return (this->emp_name_ + " cannot sell computer with serial " + std::to_string(this->computer_serial_) + ". It is assembled so it must have already been sold. Operation aborted.").c_str();
+    return message_.c_str();
 }
 
-AlreadySold::AlreadySold(std::string emp_name, unsigned int computer_serial) : emp_name_(std::move(emp_name)), computer_serial_{computer_serial}
+AlreadySold::AlreadySold(std::string emp_name, unsigned int computer_serial) : message_(emp_name + " cannot sell computer with serial " + std::to_string(computer_serial) + ". It is assembled so it must have already been sold. Operation aborted.")
 {
 
 }
