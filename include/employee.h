@@ -24,7 +24,7 @@ public:
     virtual ~employee() = default;
 };
 
-class manager : employee {
+class manager : public employee {
 public:
     void earn(unsigned value) override;
     explicit manager(std::string name);

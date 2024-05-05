@@ -28,7 +28,7 @@ public:
     [[nodiscard]] bool is_assembled() const;
 };
 
-class workstation : computer {
+class workstation : public computer {
     unsigned cpu_freq_;
     unsigned core_count_;
     void compute_performance() override;
@@ -36,7 +36,7 @@ public:
     workstation(unsigned price, unsigned cpu_freq, unsigned core_count);
 };
 
-class server : computer {
+class server : public computer {
     unsigned storage_;
     unsigned ram_capacity_;
     unsigned tflops_;
