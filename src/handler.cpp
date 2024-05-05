@@ -288,6 +288,7 @@ void handler::event_loop()
             std::cerr << "Not enough arguments.\n";
         }
     }
+    std::cout << "\n";
 }
 
 void handler::create_entity(entity_type type, const std::string& type_to_forward)
@@ -322,7 +323,7 @@ void handler::remove_entity(entity_type type)
                 std::cin >> name;
                 remove_employee(name);
             }
-            else std::cout << "Nothing to remove!\n\n";
+            else std::cout << "Nothing to remove!\n";
         }
         break; case COMPUTER:
         {
@@ -332,7 +333,7 @@ void handler::remove_entity(entity_type type)
                 std::cin >> serial;
                 remove_computer(serial);
             }
-            else std::cout << "Nothing to remove!\n\n";
+            else std::cout << "Nothing to remove!\n";
         }
         break; case TASK: break;
     }
