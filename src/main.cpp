@@ -1,7 +1,6 @@
-#include <iostream>
-
+#include "handler.h"
 int main()
 {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    handler handler0;
+    handler0.event_loop();
 }

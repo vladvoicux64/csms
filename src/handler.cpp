@@ -245,7 +245,7 @@ void handler::event_loop()
 {
     while(true) {
         std::string command;
-        std::cin >> command;
+        getline(std::cin, command);
         auto cargs = split_by_whitespace(command);
         try{
             if (handler::command_map.find(cargs[0]) == handler::command_map.end()) throw BadCommand(cargs[0]);
