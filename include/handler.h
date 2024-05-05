@@ -99,7 +99,7 @@ public:
 };
 
 class BadCommand : public std::exception {
-    std::string command_;
+    std::string message_;
 public:
     explicit BadCommand(std::string command);
     const char * what();

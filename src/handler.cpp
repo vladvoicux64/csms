@@ -249,16 +249,16 @@ void handler::event_loop()
         getline(std::cin, command);
         auto cargs = split_by_whitespace(command);
         try{
-            if (handler::command_map.find(cargs[0]) == handler::command_map.end()) throw BadCommand(cargs[0]);
-            switch (handler::command_map.at(cargs[0])) {
+            if (handler::command_map.find(cargs.at(0)) == handler::command_map.end()) throw BadCommand(cargs.at(0));
+            switch (handler::command_map.at(cargs.at(0))) {
                 case NEW: {
-                    if (handler::entity_map.find(cargs[1]) == entity_map.end()) throw BadCommand(cargs[1]);
-                    create_entity(handler::entity_map.at(cargs[1]), cargs[2]);
+                    if (handler::entity_map.find(cargs.at(1)) == entity_map.end()) throw BadCommand(cargs.at(1));
+                    create_entity(handler::entity_map.at(cargs.at(1)), cargs.at(2));
                 }
                 break; case REMOVE:
                 {
-                    if (handler::entity_map.find(cargs[1]) == entity_map.end() || cargs[1] == "task") throw BadCommand(cargs[1]);
-                    remove_entity(handler::entity_map.at(cargs[1]));
+                    if (handler::entity_map.find(cargs.at(1)) == entity_map.end() || cargs.at(1) == "task") throw BadCommand(cargs.at(1));
+                    remove_entity(handler::entity_map.at(cargs.at(1)));
                 }
                 break; case EXIT:
                 {
@@ -282,6 +282,10 @@ void handler::event_loop()
         catch (BadCommand &excp)
         {
             std::cerr << excp.what();
+        }
+        catch (std::out_of_range &excp)
+        {
+            std::cerr << "Not enough arguments.\n";
         }
     }
 }
