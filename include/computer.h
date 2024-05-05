@@ -20,6 +20,7 @@ protected:
     explicit computer(unsigned price);
 public:
     static unsigned get_stock_count();
+    static unsigned get_next_serial();
     [[nodiscard]] unsigned get_serial() const;
     void prepare_for_sale();
     virtual ~computer() = default;

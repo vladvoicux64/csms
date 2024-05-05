@@ -51,6 +51,11 @@ unsigned computer::generate_new_serial()
     return ++computer::stock_count_;
 }
 
+unsigned computer::get_next_serial()
+{
+    return computer::stock_count_ + 1;
+}
+
 void workstation::compute_performance()
 {
     this->performance_rating_ = core_count_ * cpu_freq_ * 10;
