@@ -15,7 +15,7 @@ public:
     virtual void complete() = 0;
 };
 
-class employee_task : task {
+class employee_task : public task {
     employee *employee_;
     computer *computer_;
 public:
@@ -23,7 +23,7 @@ public:
     void complete() override;
 };
 
-class managerial_task : task {
+class managerial_task : public task {
     employee *employee_;
     manager *manager_;
 public:
@@ -31,23 +31,46 @@ public:
     void complete() override;
 };
 
-class employee_query : task {
+class employee_query : public task {
     employee *employee_;
 public:
     explicit employee_query(employee *employee);
     void complete() override;
 };
 
-class computer_query : task {
+class computer_query : public task {
     computer *computer_;
 public:
     explicit computer_query(computer *computer);
     void complete() override;
 };
 
-class stock_query : task {
+class stock_query : public task {
 public:
     void complete() override;
+};
+
+class AlreadySold : public std::exception {
+    std::string emp_name_;
+    unsigned computer_serial_;
+public:
+    explicit AlreadySold(std::string emp_name, unsigned computer_serial);
+    const char * what();
+};
+
+class ManagerMissing : public std::exception {
+    std::string emp_name_;
+public:
+    explicit ManagerMissing(std::string emp_name);
+    const char * what();
+};
+
+class TypeMismatch : public std::exception {
+    std::string emp_name_;
+public:
+    explicit TypeMismatch(std::string emp_name);
+    const char * what();
+
 };
 
 #endif //CSMS_TASK_H

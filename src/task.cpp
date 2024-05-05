@@ -5,66 +5,20 @@
 #include <iostream>
 #include <utility>
 #include <sstream>
-#include <iostream>
 #include "task.h"
-
-
-class AlreadySold : std::exception {
-    std::string emp_name_;
-    unsigned computer_serial_;
-public:
-    explicit AlreadySold(std::string emp_name, unsigned computer_serial) : emp_name_(std::move(emp_name)), computer_serial_{computer_serial} {};
-    const char * what() {
-        return (this->emp_name_ + " cannot sell computer with serial " + std::to_string(this->computer_serial_) + ". It is assembled so it must have already been sold.").c_str();
-    }
-};
-
-class ManagerMissing : std::exception {
-    std::string emp_name_;
-public:
-    explicit ManagerMissing(std::string emp_name) : emp_name_(std::move(emp_name)) {};
-    const char * what() {
-        return (this->emp_name_ + " cannot be assigned as a manager in a task, because his type is not manager.").c_str();
-    }
-};
-
-class TypeMismatch : std::exception {
-    std::string emp_name_;
-public:
-    explicit TypeMismatch(std::string emp_name) : emp_name_(std::move(emp_name)) {};
-    const char * what() {
-        return (this->emp_name_ + " cannot be assigned as an employee in a sales task, as he is a manager.").c_str();
-    }
-
-};
 
 employee_task::employee_task(computer *computer, employee *employee) : employee_(employee), computer_(computer)
 {
-    try {
-        if (dynamic_cast<manager *>(employee)) throw TypeMismatch(employee->get_name());
-    }
-    catch (TypeMismatch &excp)
-    {
-        std::cerr << excp.what();
-        throw;
-    }
+    if (dynamic_cast<manager *>(employee)) throw TypeMismatch(employee->get_name());
+    if (computer->is_assembled()) throw AlreadySold(this->employee_->get_name(), this->computer_->get_serial());
+
 }
 
 void employee_task::complete()
 {
-    try {
-        if (!this->computer_->is_assembled()) {
-            //POLIMORFISM
-            this->computer_->prepare_for_sale();
-            this->employee_->earn(this->computer_->get_price());
-        } else
-        throw AlreadySold(this->employee_->get_name(), this->computer_->get_serial());
-    }
-    catch (AlreadySold &excp)
-    {
-        std::cerr << excp.what();
-        throw;
-    }
+    //POLIMORFISM
+    this->computer_->prepare_for_sale();
+    this->employee_->earn(this->computer_->get_price());
 }
 
 void managerial_task::complete()
@@ -75,16 +29,9 @@ void managerial_task::complete()
 
 managerial_task::managerial_task(employee *manager, employee *employee) : employee_(employee)
 {
-    try {
-        auto *temp = dynamic_cast<class manager *>(manager);
-        if (temp) this->manager_ = temp;
-        else throw ManagerMissing(manager->get_name());
-    }
-    catch (ManagerMissing &excp)
-    {
-        std::cerr << excp.what();
-        throw;
-    }
+    auto *temp = dynamic_cast<class manager *>(manager);
+    if (temp) this->manager_ = temp;
+    else throw ManagerMissing(manager->get_name());
 }
 
 computer_query::computer_query(computer *computer) : computer_(computer)
@@ -118,4 +65,34 @@ void employee_query::complete()
          this->employee_->get_commission() << ".\n" << "Total earnings: " << this->employee_->get_earnings() <<
          ".\n\n";
     std::cout << buff.str();
+}
+
+const char *TypeMismatch::what()
+{
+    return (this->emp_name_ + " cannot be assigned as an employee in a sales task, as he is a manager. Operation aborted.").c_str();
+}
+
+TypeMismatch::TypeMismatch(std::string emp_name) : emp_name_(std::move(emp_name))
+{
+
+}
+
+const char *ManagerMissing::what()
+{
+    return (this->emp_name_ + " cannot be assigned as a manager in a task, because his type is not manager. Operation aborted.").c_str();
+}
+
+ManagerMissing::ManagerMissing(std::string emp_name) : emp_name_(std::move(emp_name))
+{
+
+}
+
+const char *AlreadySold::what()
+{
+    return (this->emp_name_ + " cannot sell computer with serial " + std::to_string(this->computer_serial_) + ". It is assembled so it must have already been sold. Operation aborted.").c_str();
+}
+
+AlreadySold::AlreadySold(std::string emp_name, unsigned int computer_serial) : emp_name_(std::move(emp_name)), computer_serial_{computer_serial}
+{
+
 }
