@@ -5,6 +5,7 @@
 #include "handler.h"
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <utility>
 #include <unordered_map>
@@ -230,15 +231,15 @@ void handler::skip_task()
     }
 }
 
-std::vector<std::string> split_by_whitespace(std::string s){
-    std::vector<std::string> ans;
-    size_t pos = 0;
-    while(pos < s.size()){
-        pos = s.find("%20");
-        ans.push_back(s.substr(0,pos));
-        s.erase(0,pos+3); // 3 is the length of the delimiter, "%20"
+std::vector<std::string> split_by_whitespace(const std::string& input_string)
+{
+    std::vector<std::string> tokens;
+    std::istringstream iss(input_string);
+    std::string token;
+    while (iss >> token) {
+        tokens.push_back(token);
     }
-    return ans;
+    return tokens;
 }
 
 void handler::event_loop()
