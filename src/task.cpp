@@ -105,3 +105,17 @@ void stock_query::complete()
 {
     std::cout << computer::get_stock_count();
 }
+
+employee_query::employee_query(employee *employee) : employee_(employee)
+{
+
+}
+
+void employee_query::complete()
+{
+    std::stringstream buff;
+    buff << "Name: " << this->employee_->get_name() << ".\n" << "Commission: " <<
+         this->employee_->get_commission() << ".\n" << "Total earnings: " << this->employee_->get_earnings() <<
+         ".\n\n";
+    std::cout << buff.str();
+}

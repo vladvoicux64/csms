@@ -31,6 +31,13 @@ public:
     void complete() override;
 };
 
+class employee_query : task {
+    employee *employee_;
+public:
+    explicit employee_query(employee *employee);
+    void complete() override;
+};
+
 class computer_query : task {
     computer *computer_;
 public:
