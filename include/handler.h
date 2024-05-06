@@ -7,6 +7,7 @@
 
 
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <queue>
 #include <string>
@@ -55,6 +56,8 @@ class handler {
     std::unordered_map<std::string, std::unique_ptr<employee>> employees_;
     std::unordered_map<unsigned, std::unique_ptr<computer>> computers_;
     std::queue<std::unique_ptr<task>> tasks_;
+    std::unordered_set<std::string> employees_in_use_;
+    std::unordered_set<unsigned> computers_in_use_;
     void create_employee(employee_type type);
     void create_computer(computer_type type);
     void create_task(task_type type);
@@ -102,4 +105,8 @@ public:
     const char * what();
 };
 
+class InUse : public std::exception {
+public:
+    const char * what();
+};
 #endif //CSMS_HANDLER_H
