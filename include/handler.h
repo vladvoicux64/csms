@@ -11,6 +11,7 @@
 #include <utility>
 #include <queue>
 #include <string>
+#include <memory>
 #include "task.h"
 #include "computer.h"
 #include "employee.h"
