@@ -56,7 +56,7 @@ void computer_query::complete()
 
 void stock_query::complete()
 {
-    std::cout << "There are " << computer::get_stock_count() << " computers in stock.\n";
+    std::cout << "There have been " << computer::get_stock_count() << " computers in stock in total (current amount may differ).\n";
 }
 
 employee_query::employee_query(std::shared_ptr<employee> employee) : employee_(std::move(employee))
