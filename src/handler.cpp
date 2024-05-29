@@ -8,6 +8,7 @@
 #include <sstream>
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 
 std::unordered_map<std::string, command_type> handler::command_map = {{"new", NEW},
                                                                     {"remove", REMOVE},
@@ -38,6 +39,12 @@ void handler::create_employee(employee_type type)
     std::string name;
     std::cout << "Enter name and press Enter:\n";
     std::cin >> name;
+    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+    std::string temp = name;
+    name[0] = char(std::toupper(name[0]));
+    // add reversed name to create a "secure" hash in the ssytem, so not everyone knows how to access employee data
+    std::reverse(temp.begin(), temp.end());
+    name += '_' + temp;
     switch (type) {
         case REGULAR:
         {

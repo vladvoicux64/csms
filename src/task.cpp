@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <string>
 #include <utility>
 #include "task.h"
 
@@ -56,7 +57,7 @@ void computer_query::complete()
 
 void stock_query::complete()
 {
-    std::cout << "There are " << computer::get_stock_count() << " computers in stock.\n";
+    std::cout << "There have been " << computer::get_stock_count() << " computers in stock in total (current amount may differ).\n";
 }
 
 employee_query::employee_query(std::shared_ptr<employee> employee) : employee_(std::move(employee))
@@ -67,7 +68,7 @@ employee_query::employee_query(std::shared_ptr<employee> employee) : employee_(s
 void employee_query::complete()
 {
     std::stringstream buff;
-    buff << "Name: " << this->employee_->get_name() << ".\n" << "Commission: " <<
+    buff << "Internal username: " << this->employee_->get_name() << ".\n" << "Name: " << this->employee_->get_name().substr(0, this->employee_->get_name().length() / 2) << ".\n" << "Commission: " <<
          this->employee_->get_commission() << ".\n" << "Total earnings: " << this->employee_->get_earnings() <<
          ".\n";
     std::cout << buff.str();
