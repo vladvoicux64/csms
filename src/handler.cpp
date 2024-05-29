@@ -362,6 +362,12 @@ void handler::remove_entity(entity_type type)
     }
 }
 
+handler &handler::get_instance()
+{
+    static handler instance;
+    return instance;
+}
+
 const char *InsufficientData::what()
 {
     return message_.c_str();

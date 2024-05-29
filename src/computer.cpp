@@ -3,6 +3,7 @@
 //
 
 #include "computer.h"
+#include <iostream>
 
 unsigned computer::stock_count_ = 0;
 
@@ -34,6 +35,7 @@ void computer::prepare_for_sale()
 {
     this->assemble();
     this->compute_performance();
+    this->packbox();
 }
 
 unsigned computer::get_stock_count()
@@ -65,6 +67,12 @@ workstation::workstation(unsigned int price, unsigned int cpu_freq, unsigned int
 {
 }
 
+void workstation::packbox()
+{
+    computerbox<workstation> box{*this};
+    std::cout << "Box has been packed but no one came for it :(.\n";
+}
+
 void server::compute_performance()
 {
     this->performance_rating_ = this->ram_capacity_ * 10 + this->storage_ + this->tflops_ * 100;
@@ -72,4 +80,11 @@ void server::compute_performance()
 
 server::server(unsigned int price, unsigned int storage, unsigned int ram_capacity, unsigned int tflops) : computer(price), storage_(storage), ram_capacity_(ram_capacity), tflops_(tflops)
 {
+}
+
+void server::packbox()
+{
+    computerbox<server> box{*this};
+    std::cout << "Box has been packed, shipping label is " << box.set_shipping_label("abcde")
+              << " but no one came for it :(.\n"; // servers get shipping labels as strings
 }

@@ -5,6 +5,7 @@
 #ifndef CSMS_COMPUTER_H
 #define CSMS_COMPUTER_H
 
+#include <computerbox.h>
 
 class computer {
 private:
@@ -13,6 +14,8 @@ private:
     unsigned price_;
     bool assembled_;
     void assemble();
+
+    virtual void packbox() = 0;
 protected:
     unsigned performance_rating_;
     virtual void compute_performance() = 0;
@@ -33,6 +36,8 @@ class workstation : public computer {
     unsigned cpu_freq_;
     unsigned core_count_;
     void compute_performance() override;
+
+    void packbox() override;
 public:
     workstation(unsigned price, unsigned cpu_freq, unsigned core_count);
 };
@@ -41,6 +46,8 @@ class server : public computer {
     unsigned storage_;
     unsigned ram_capacity_;
     unsigned tflops_;
+
+    void packbox() override;
     void compute_performance() override;
 public:
     server(unsigned price, unsigned storage, unsigned ram_capacity, unsigned tflops);

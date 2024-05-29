@@ -49,6 +49,7 @@ typedef enum tasks {
 } task_type;
 
 class handler {
+    handler() = default;
     static std::unordered_map<std::string, command_type> command_map;
     static std::unordered_map<std::string, entity_type> entity_map;
     static std::unordered_map<std::string, employee_type> employee_map;
@@ -68,7 +69,11 @@ class handler {
     void remove_computer(unsigned serial);
     void skip_task();
 public:
-    handler() = default;
+    static handler &get_instance();
+
+    handler(handler const &) = delete;
+
+    void operator=(handler const &) = delete;
     void event_loop();
 };
 

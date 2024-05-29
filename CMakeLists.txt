@@ -13,4 +13,6 @@ add_executable(csms src/main.cpp
         src/task.cpp
         include/task.h
         src/handler.cpp
-        include/handler.h)
+        include/handler.h
+        include/computerbox.h
+        src/computerbox.cpp)
