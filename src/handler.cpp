@@ -8,7 +8,6 @@
 #include <sstream>
 #include <vector>
 #include <unordered_map>
-#include <algorithm>
 
 std::unordered_map<std::string, command_type> handler::command_map = {{"new", NEW},
                                                                     {"remove", REMOVE},

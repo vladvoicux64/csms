@@ -47,7 +47,7 @@ typedef enum tasks {
     COMP_QUERY_TASK,
     STOCK_QUERY_TASK
 } task_type;
-
+// singleton
 class handler {
     handler() = default;
     static std::unordered_map<std::string, command_type> command_map;

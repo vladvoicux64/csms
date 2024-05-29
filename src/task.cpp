@@ -7,7 +7,7 @@
 #include <string>
 #include <utility>
 #include "task.h"
-
+// proxy
 employee_task::employee_task(const std::shared_ptr<computer>& computer, const std::shared_ptr<employee>& employee) : employee_(
         employee), computer_(computer)
 {

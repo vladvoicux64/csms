@@ -30,7 +30,7 @@ bool computer::is_assembled() const
 {
     return this->assembled_;
 }
-
+// template method
 void computer::prepare_for_sale()
 {
     this->assemble();
