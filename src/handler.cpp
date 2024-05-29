@@ -125,7 +125,7 @@ void handler::create_task(task_type type)
                         std::cin >> serial;
                     }
                     std::cin.ignore();
-                    this->tasks_.emplace(std::make_unique<employee_task>(this->computers_.at(serial).get(), this->employees_.at(name).get()));
+                    this->tasks_.emplace(std::make_unique<employee_task>(this->computers_.at(serial), this->employees_.at(name)));
                 }
             }
             break; case MANAGERIAL_TASK:
@@ -145,7 +145,7 @@ void handler::create_task(task_type type)
                         std::cin >> man_name;
                     }
                     std::cin.ignore();
-                    this->tasks_.emplace(std::make_unique<managerial_task>(this->employees_.at(man_name).get(), this->employees_.at(emp_name).get()));
+                    this->tasks_.emplace(std::make_unique<managerial_task>(this->employees_.at(man_name), this->employees_.at(emp_name)));
                 }
             }
             break; case EMPLOYEE_QUERY_TASK:
@@ -160,7 +160,7 @@ void handler::create_task(task_type type)
                         std::cin >> name;
                     }
                     std::cin.ignore();
-                    this->tasks_.emplace(std::make_unique<employee_query>(this->employees_.at(name).get()));
+                    this->tasks_.emplace(std::make_unique<employee_query>(this->employees_.at(name)));
                 }
             }
             break; case COMP_QUERY_TASK:
@@ -175,7 +175,7 @@ void handler::create_task(task_type type)
                         std::cin >> serial;
                     }
                     std::cin.ignore();
-                    this->tasks_.emplace(std::make_unique<computer_query>(this->computers_.at(serial).get()));
+                    this->tasks_.emplace(std::make_unique<computer_query>(this->computers_.at(serial)));
                 }
             }
             break; case STOCK_QUERY_TASK:
@@ -295,9 +295,6 @@ void handler::event_loop()
         catch (std::out_of_range &excp)
         {
             std::cerr << "Not enough arguments."  << "\n";
-        }
-        catch (InUse &excp) {
-            std::cerr << excp.what() << "\n";
         }
     }
 }

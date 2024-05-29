@@ -21,7 +21,7 @@ class employee_task : public task {
     std::shared_ptr<employee> employee_;
     std::shared_ptr<computer> computer_;
 public:
-    explicit employee_task(std::shared_ptr<computer> computer, std::shared_ptr<employee> employee);
+    explicit employee_task(const std::shared_ptr<computer>& computer, const std::shared_ptr<employee>& employee);
     void complete() override;
 };
 
@@ -29,7 +29,7 @@ class managerial_task : public task {
     std::shared_ptr<employee> employee_;
     std::shared_ptr<manager> manager_;
 public:
-    explicit managerial_task(std::shared_ptr<employee> manager, std::shared_ptr<employee> employee);
+    explicit managerial_task(const std::shared_ptr<employee>& manager, std::shared_ptr<employee> employee);
     void complete() override;
 };
 

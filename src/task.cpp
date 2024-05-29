@@ -4,9 +4,10 @@
 
 #include <iostream>
 #include <sstream>
+#include <utility>
 #include "task.h"
 
-employee_task::employee_task(std::shared_ptr<computer> computer, std::shared_ptr<employee> employee) : employee_(
+employee_task::employee_task(const std::shared_ptr<computer>& computer, const std::shared_ptr<employee>& employee) : employee_(
         employee), computer_(computer)
 {
     if (dynamic_pointer_cast<manager>(employee)) throw TypeMismatch(employee->get_name());
@@ -31,15 +32,15 @@ void managerial_task::complete()
 
 }
 
-managerial_task::managerial_task(std::shared_ptr<employee> manager, std::shared_ptr<employee> employee) : employee_(
-        employee)
+managerial_task::managerial_task(const std::shared_ptr<employee>& manager, std::shared_ptr<employee> employee) : employee_(std::move(
+        employee))
 {
-    auto *temp = dynamic_pointer_cast<class manager>(manager).get();
+    auto temp = dynamic_pointer_cast<class manager>(manager);
     if (temp) this->manager_ = temp;
     else throw ManagerMissing(manager->get_name());
 }
 
-computer_query::computer_query(std::shared_ptr<computer> computer) : computer_(computer)
+computer_query::computer_query(std::shared_ptr<computer> computer) : computer_(std::move(computer))
 {
 
 }
@@ -58,7 +59,7 @@ void stock_query::complete()
     std::cout << "There are " << computer::get_stock_count() << " computers in stock.\n";
 }
 
-employee_query::employee_query(std::shared_ptr<employee> employee) : employee_(employee)
+employee_query::employee_query(std::shared_ptr<employee> employee) : employee_(std::move(employee))
 {
 
 }
