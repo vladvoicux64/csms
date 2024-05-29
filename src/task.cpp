@@ -6,9 +6,10 @@
 #include <sstream>
 #include "task.h"
 
-employee_task::employee_task(computer *computer, employee *employee) : employee_(employee), computer_(computer)
+employee_task::employee_task(std::shared_ptr<computer> computer, std::shared_ptr<employee> employee) : employee_(
+        employee), computer_(computer)
 {
-    if (dynamic_cast<manager *>(employee)) throw TypeMismatch(employee->get_name());
+    if (dynamic_pointer_cast<manager>(employee)) throw TypeMismatch(employee->get_name());
     if (computer->is_assembled()) throw AlreadySold(this->employee_->get_name(), this->computer_->get_serial());
 
 }
@@ -30,14 +31,15 @@ void managerial_task::complete()
 
 }
 
-managerial_task::managerial_task(employee *manager, employee *employee) : employee_(employee)
+managerial_task::managerial_task(std::shared_ptr<employee> manager, std::shared_ptr<employee> employee) : employee_(
+        employee)
 {
-    auto *temp = dynamic_cast<class manager *>(manager);
+    auto *temp = dynamic_pointer_cast<class manager>(manager).get();
     if (temp) this->manager_ = temp;
     else throw ManagerMissing(manager->get_name());
 }
 
-computer_query::computer_query(computer *computer) : computer_(computer)
+computer_query::computer_query(std::shared_ptr<computer> computer) : computer_(computer)
 {
 
 }
@@ -56,7 +58,7 @@ void stock_query::complete()
     std::cout << "There are " << computer::get_stock_count() << " computers in stock.\n";
 }
 
-employee_query::employee_query(employee *employee) : employee_(employee)
+employee_query::employee_query(std::shared_ptr<employee> employee) : employee_(employee)
 {
 
 }

@@ -9,7 +9,7 @@
 #include "computer.h"
 #include "employee.h"
 #include "computerbox.h"
-#include <type_traits>
+#include <memory>
 
 class task {
 public:
@@ -18,32 +18,32 @@ public:
 };
 
 class employee_task : public task {
-    employee *employee_;
-    computer *computer_;
+    std::shared_ptr<employee> employee_;
+    std::shared_ptr<computer> computer_;
 public:
-    explicit employee_task(computer *computer, employee *employee);
+    explicit employee_task(std::shared_ptr<computer> computer, std::shared_ptr<employee> employee);
     void complete() override;
 };
 
 class managerial_task : public task {
-    employee *employee_;
-    manager *manager_;
+    std::shared_ptr<employee> employee_;
+    std::shared_ptr<manager> manager_;
 public:
-    explicit managerial_task(employee* manager, employee *employee);
+    explicit managerial_task(std::shared_ptr<employee> manager, std::shared_ptr<employee> employee);
     void complete() override;
 };
 
 class employee_query : public task {
-    employee *employee_;
+    std::shared_ptr<employee> employee_;
 public:
-    explicit employee_query(employee *employee);
+    explicit employee_query(std::shared_ptr<employee> employee);
     void complete() override;
 };
 
 class computer_query : public task {
-    computer *computer_;
+    std::shared_ptr<computer> computer_;
 public:
-    explicit computer_query(computer *computer);
+    explicit computer_query(std::shared_ptr<computer> computer);
     void complete() override;
 };
 

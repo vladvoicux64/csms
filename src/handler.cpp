@@ -126,8 +126,6 @@ void handler::create_task(task_type type)
                     }
                     std::cin.ignore();
                     this->tasks_.emplace(std::make_unique<employee_task>(this->computers_.at(serial).get(), this->employees_.at(name).get()));
-                    this->employees_in_use_.insert(name);
-                    this->computers_in_use_.insert(serial);
                 }
             }
             break; case MANAGERIAL_TASK:
@@ -148,8 +146,6 @@ void handler::create_task(task_type type)
                     }
                     std::cin.ignore();
                     this->tasks_.emplace(std::make_unique<managerial_task>(this->employees_.at(man_name).get(), this->employees_.at(emp_name).get()));
-                    this->employees_in_use_.insert(emp_name);
-                    this->employees_in_use_.insert(man_name);
                 }
             }
             break; case EMPLOYEE_QUERY_TASK:
@@ -165,7 +161,6 @@ void handler::create_task(task_type type)
                     }
                     std::cin.ignore();
                     this->tasks_.emplace(std::make_unique<employee_query>(this->employees_.at(name).get()));
-                    this->employees_in_use_.insert(name);
                 }
             }
             break; case COMP_QUERY_TASK:
@@ -181,7 +176,6 @@ void handler::create_task(task_type type)
                     }
                     std::cin.ignore();
                     this->tasks_.emplace(std::make_unique<computer_query>(this->computers_.at(serial).get()));
-                    this->computers_in_use_.insert(serial);
                 }
             }
             break; case STOCK_QUERY_TASK:
@@ -213,7 +207,6 @@ void handler::remove_employee(const std::string& name)
 {
     try {
         if (this->employees_.find(name) == this->employees_.end()) throw InexistingEmployee(name);
-        if (this->employees_in_use_.find(name) != this->employees_in_use_.end()) throw InUse();
         else this->employees_.erase(name);
         std::cout << "Operation successful.\n";
     }
@@ -226,7 +219,6 @@ void handler::remove_computer(unsigned int serial)
 {
     try {
         if (this->computers_.find(serial) == this->computers_.end()) throw InexistingComputer(serial);
-        if (this->computers_in_use_.find(serial) != this->computers_in_use_.end()) throw InUse();
         else this->computers_.erase(serial);
         std::cout << "Operation successful.\n";
     }
@@ -288,8 +280,6 @@ void handler::event_loop()
                         this->tasks_.front()->complete();
                         this->tasks_.pop();
                     }
-                    this->employees_in_use_.clear();
-                    this->computers_in_use_.clear();
                     std::cout << "Operation successful.\n";
                 }
                 break; case SKIP:
@@ -415,7 +405,3 @@ BadCommand::BadCommand(std::string command) : message_("Bad command: " + command
 
 }
 
-const char *InUse::what()
-{
-    return "The resource you are trying to remove is in use. Operation aborted.";
-}

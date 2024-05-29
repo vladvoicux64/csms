@@ -55,11 +55,9 @@ class handler {
     static std::unordered_map<std::string, employee_type> employee_map;
     static std::unordered_map<std::string, computer_type> computer_map;
     static std::unordered_map<std::string, task_type> task_map;
-    std::unordered_map<std::string, std::unique_ptr<employee>> employees_;
-    std::unordered_map<unsigned, std::unique_ptr<computer>> computers_;
+    std::unordered_map<std::string, std::shared_ptr<employee>> employees_;
+    std::unordered_map<unsigned, std::shared_ptr<computer>> computers_;
     std::queue<std::unique_ptr<task>> tasks_;
-    std::unordered_set<std::string> employees_in_use_;
-    std::unordered_set<unsigned> computers_in_use_;
     void create_employee(employee_type type);
     void create_computer(computer_type type);
     void create_task(task_type type);
